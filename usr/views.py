@@ -10,8 +10,6 @@ from .models import *
 
 import pdb
 
-tester = status.HTTP_200_OK
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny,])
@@ -22,7 +20,7 @@ def signin(request):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             result = {
-                'result':'suc',
+                'result':'success',
                 'message':f'created {serializer.data["username"]}',
                 'user':serializer.data            
                 }
@@ -34,11 +32,6 @@ def signin(request):
                 'message' : str(exp)
                 }
             return Response(result, status=status.HTTP_400_BAD_REQUEST)       
-
-
-
-
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -52,21 +45,19 @@ def login(request):
                     'message':'Login successful',
                     'user': serializer.data
                     }
-                status = status.HTTP_200_OK
-                return Response(result, status=status)
+                return Response(result, status=status.HTTP_200_OK)
             else:
                 result = {
                     'result' : 'error',
                     'message' : 'Login failed. User information does not exist'}
-                status = HTTP_400_BAD_REQUEST
-                return Response(result, status=status)
+                return Response(result, status=status.HTTP_400_BAD_REQUEST)
         except Exception as exp:
             result = {
                 'result' : 'error',
                 'message' : 'error'}
-            status = HTTP_400_BAD_REQUEST
-            return Response(result, status=status)
-        
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET'])
 def signout(request):
     if request.method == 'GET':
@@ -81,9 +72,6 @@ def signout(request):
             status = HTTP_400_BAD_REQUEST
             return Response(result, status=status)
 
-
-
-from rest_framework import status
 
 @api_view(['GET','POST'])
 def entry(request):
