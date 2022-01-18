@@ -1,2 +1,1 @@
-# django_assignment2
- 
+same as the other but with rest
